@@ -84,7 +84,7 @@ type
       : TObjectList<T>;
 
     // pega campo autoincremento
-    function GetID(ATabela: TTabela; ACampo: string): Integer; override;
+    function GetID(ATabela: TTabela): Integer; override;
     function GetMax(ATabela: TTabela; ACampo: string): Integer; overload;
     function GetMax(ATabela: TTabela; ACampo,AFiltro: string): Integer; overload;
 
@@ -476,18 +476,21 @@ begin
   end;
 end;
 
-function TDaoFDB.GetID(ATabela: TTabela; ACampo: string): Integer;
+function TDaoFDB.GetID(ATabela: TTabela): Integer;
 var
   AQry: TFDQuery;
+  sTextSql:String;
 begin
   AQry := TFDQuery.Create(Application);
+  sTextSql := Format('SELECT CAST(nextval(''seq_%s'') as numeric) as i_sequence', [PegaNomeTab(ATabela)]);
   with AQry do
   begin
     Connection := FConexao.Database;
     sql.Clear;
-    sql.Add('select max(' + ACampo + ') from ' + PegaNomeTab(ATabela));
+    //sql.Add('select max(' + ACampo + ') from ' + PegaNomeTab(ATabela));
+	sql.Add(sTextSql);
     Open;
-    Result := fields[0].AsInteger + 1;
+    Result := fields[0].AsInteger;
   end;
 end;
 
@@ -767,7 +770,7 @@ begin
                     if (StrToIntDef((Tform(vaForm).Components[i] as TLabeledEdit).Text, 0)> 0) then
                       PropRtti.SetValue(ATabela, TValue.FromVariant(StrToInt((Tform(vaForm).Components[i] as TLabeledEdit).Text)))
                     else
-                      PropRtti.SetValue(ATabela, TValue.FromVariant(GetID(ATabela,PropRtti.Name)));
+                      PropRtti.SetValue(ATabela, TValue.FromVariant(GetID(ATabela)));
                   end;
                 tkFloat:
                   begin
