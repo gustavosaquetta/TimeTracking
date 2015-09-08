@@ -1,5 +1,7 @@
 #TODO
-1 - Readequar tabelas;
+1 - Mudar para Postgres;
+	1.1 - Readequar tabelas;
+2 - Adequar framework para o postgres; 
 2 - Criar classe para tabela versão;
 3 - Criar classe para tabela rusuario;
 4 - Criar Classe para tabela prioridade;
