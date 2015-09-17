@@ -1,14 +1,14 @@
 #TODO
 1 - Mudar para Postgres;
-	1.1 - Readequar tabelas;
+	1.1 - Readequar tabelas;(Feito - Eudecio)
 2 - Adequar framework para o postgres; 
-2 - Criar classe para tabela vers„o;
+2 - Criar classe para tabela vers√£o;
 3 - Criar classe para tabela rusuario;
 4 - Criar Classe para tabela prioridade;
 5 - Criar classe para buscar os dados do trello;
-6 - criar classe de parser das informaÁ„o obtidas do trello e atribuilas aos objetos;
+6 - criar classe de parser das informa√ß√£o obtidas do trello e atribuilas aos objetos;
 7 - Alterar tela de cadastro de tarefas;
-	7.1 - Incluir bot„o de importaÁ„o de tarefas do trello;
-	7.2 - Incluir campos referentes as informaÁıes obtidas do trello;
+	7.1 - Incluir bot√£o de importa√ß√£o de tarefas do trello;
+	7.2 - Incluir campos referentes as informa√ß√µes obtidas do trello;
 	7.3 - Incluir grid com os eventos relacionados as tarefas;
 8 - Criar relatorios de tarefas e eventos;
