@@ -3,14 +3,11 @@ unit ufrmTarefas;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData,
-  cxGridTableView, cxClasses, System.Actions, Vcl.ActnList, Vcl.ImgList,
-  Vcl.ComCtrls, Vcl.ExtCtrls, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridDBTableView, cxGrid, Vcl.ToolWin,
-  dxGDIPlusClasses, Vcl.StdCtrls, Vcl.DBCtrls, uTarefa, uUsuario, uSituacao;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, System.Actions,
+  Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ToolWin, Data.DB, uTarefa, uUsuario, uSituacao,
+  System.ImageList, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmTarefas = class(TfrmPadrao)
@@ -22,8 +19,6 @@ type
     I_COD_USUARIO: TDBLookupComboBox;
     lbl3: TLabel;
     dsUsuario: TDataSource;
-    cxgrdbclmnI_COD_TAREFA: TcxGridDBColumn;
-    cxgrdbclmnS_DESCRICAO: TcxGridDBColumn;
     S_NOME: TLabeledEdit;
     I_COD_SITUACAO: TDBLookupComboBox;
     dsSituacao: TDataSource;
@@ -147,11 +142,6 @@ begin
   inherited;
   Registros := DM.Dao.ConsultaTab(ATab, ACampos);
   dsConsulta.DataSet := Registros;
-  cxGrid1DBTableView1.DataController.DataSource := dsConsulta;
-  cxgrdbclmnI_COD_TAREFA.Caption := 'Código';
-  cxgrdbclmnS_DESCRICAO.Caption := 'Nome';
-  cxgrdbclmnI_COD_TAREFA.DataBinding.FieldName := 'I_COD_TAREFA';
-  cxgrdbclmnS_DESCRICAO.DataBinding.FieldName := 'S_NOME';
   sbStatus.Panels[1].Text := 'Registros no DataSet: ' + IntToStr(Registros.RecordCount);
 end;
 

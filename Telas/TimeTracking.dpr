@@ -25,7 +25,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  TStyleManager.TrySetStyle('Metropolis UI Blue');
   Application.CreateForm(TfrmPincipal, frmPincipal);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TfrmTipo, frmTipo);

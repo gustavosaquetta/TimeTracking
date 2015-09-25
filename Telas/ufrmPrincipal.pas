@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.Actions, Vcl.ActnList,
-  Vcl.ComCtrls, Vcl.ToolWin, Vcl.ImgList, cxGraphics;
+  Vcl.ComCtrls, Vcl.ToolWin, Vcl.ImgList, System.ImageList;
 
 type
   TfrmPincipal = class(TForm)
@@ -20,11 +20,11 @@ type
     actUsuarios: TAction;
     actRelatorios: TAction;
     actSair: TAction;
-    cximglstMenuPrincipal: TcxImageList;
     actTipo: TAction;
     actSituacao: TAction;
     btnTipo: TToolButton;
     btnSituacao: TToolButton;
+    il1: TImageList;
     procedure actSairExecute(Sender: TObject);
     procedure actTarefasExecute(Sender: TObject);
     procedure actUsuariosExecute(Sender: TObject);

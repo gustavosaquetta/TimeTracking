@@ -3,19 +3,13 @@ unit ufrmSituacao;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData,
-  cxGridTableView, cxClasses, System.Actions, Vcl.ActnList, Vcl.ImgList,
-  Vcl.ComCtrls, Vcl.ExtCtrls, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridDBTableView, cxGrid, Vcl.ToolWin, uSituacao,
-  Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, Data.DB,
+  System.Actions, Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.ToolWin, uSituacao, Vcl.StdCtrls, System.ImageList, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmSituacao = class(TfrmPadrao)
-    cxgrdbclmnGrid1DBTableView1Column1: TcxGridDBColumn;
-    cxgrdbclmnGrid1DBTableView1Column2: TcxGridDBColumn;
     I_COD_SITUACAO: TLabeledEdit;
     S_NOME: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
@@ -90,11 +84,6 @@ begin
   inherited;
   Registros := DM.Dao.ConsultaTab(ATab, ACampos);
   dsConsulta.DataSet := Registros;
-  cxGrid1DBTableView1.DataController.DataSource := dsConsulta;
-  cxgrdbclmnGrid1DBTableView1Column1.Caption := 'Código';
-  cxgrdbclmnGrid1DBTableView1Column2.Caption := 'Nome';
-  cxgrdbclmnGrid1DBTableView1Column1.DataBinding.FieldName := 'I_COD_SITUACAO';
-  cxgrdbclmnGrid1DBTableView1Column2.DataBinding.FieldName := 'S_NOME';
   sbStatus.Panels[1].Text := 'Registros no DataSet: ' + IntToStr(Registros.RecordCount);
 end;
 

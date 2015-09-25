@@ -24,11 +24,13 @@ type
     FPorta: string;
     FUsuario: string;
     FLocalBD: string;
+    FBanco: string;
     procedure SetPorta(const Value: string);
     procedure SetSenha(const Value: string);
     procedure SetUsuario(const Value: string);
     procedure SetLocalBD(const Value: string);
-  public
+
+    procedure SetBanco(const Value: string);  public
     function Conectado: Boolean; virtual; abstract;
     procedure Conecta; virtual; abstract;
 
@@ -36,6 +38,7 @@ type
     property Usuario: string read FUsuario write SetUsuario;
     property Senha: string read FSenha write SetSenha;
     property Porta: string read FPorta write SetPorta;
+    property Banco: string read FBanco write SetBanco;
   end;
 
   TTransacaoBase = class
@@ -98,8 +101,8 @@ type
 
 
     // pega campo autoincremento
-    function GetID(ATabela:TTabela; ACampo: string): Integer;
-      virtual; abstract;
+    //function GetID(ATabela:TTabela; ACampo: string): Integer;
+    //  virtual; abstract;
 
     // recordcount
     function GetRecordCount(ATabela: TTabela; ACampos: array of string):
@@ -119,6 +122,11 @@ implementation
 uses PrsAtributos;
 
 { TConexaoBase }
+
+procedure TConexaoBase.SetBanco(const Value: string);
+begin
+  FBanco := Value;
+end;
 
 procedure TConexaoBase.SetLocalBD(const Value: string);
 begin

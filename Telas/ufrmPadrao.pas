@@ -5,15 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ToolWin, Vcl.ImgList,
-  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
-  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB,
-  cxDBData, cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.ExtCtrls, System.Actions,
-  Vcl.ActnList;
+  Data.DB, Vcl.ExtCtrls, System.Actions, Vcl.ActnList, Vcl.Grids, Vcl.DBGrids,
+  System.ImageList;
 
 type
   TfrmPadrao = class(TForm)
-    cxImageList1: TcxImageList;
     ToolBar1: TToolBar;
     btnNovo: TToolButton;
     btnAlterar: TToolButton;
@@ -26,9 +22,6 @@ type
     Panel1: TPanel;
     PageControl1: TPageControl;
     tsConsulta: TTabSheet;
-    cxGrid1: TcxGrid;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1Level1: TcxGridLevel;
     tsCadastro: TTabSheet;
     sbStatus: TStatusBar;
     Panel2: TPanel;
@@ -42,19 +35,8 @@ type
     actFechar: TAction;
     Image1: TImage;
     Image2: TImage;
-    cxstylrpstry1: TcxStyleRepository;
-    cxgrdtblvwstylshtGridTableViewStyleSheetRainyDay: TcxGridTableViewStyleSheet;
-    cxstyl1: TcxStyle;
-    cxstyl2: TcxStyle;
-    cxstyl3: TcxStyle;
-    cxstyl4: TcxStyle;
-    cxstyl5: TcxStyle;
-    cxstyl6: TcxStyle;
-    cxstyl7: TcxStyle;
-    cxstyl8: TcxStyle;
-    cxstyl9: TcxStyle;
-    cxstyl10: TcxStyle;
-    cxstyl11: TcxStyle;
+    grid1: TDBGrid;
+    il1: TImageList;
     procedure actFecharExecute(Sender: TObject);
     procedure actCancelarExecute(Sender: TObject);
     procedure actNovoExecute(Sender: TObject);

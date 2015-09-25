@@ -8,7 +8,7 @@ uses Db, PrsBase, Rtti, PrsAtributos, system.SysUtils, system.Classes,
   FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.VCLUI.Wait,
-  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.DBCtrls,Vcl.ComCtrls;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.DBCtrls,Vcl.ComCtrls,FireDAC.Phys.PGDef, FireDAC.Phys.PG;
 
 type
   TTransacaoFDB = class(TTransacaoBase)
@@ -36,7 +36,8 @@ type
     FDatabase: TFDConnection;
     // transação para consultas
     FTransQuery: TFDTransaction;
-    FPhysFBDriverLink: TFDPhysFBDriverLink;
+    //FPhysFBDriverLink: TFDPhysFBDriverLink;
+    FPhysPGDriverLink: TFDPhysPgDriverLink;
   public
     constructor Create();
     destructor Destroy; override;
@@ -84,7 +85,8 @@ type
       : TObjectList<T>;
 
     // pega campo autoincremento
-    function GetID(ATabela: TTabela): Integer; override;
+    function GetID(ATabela: TTabela): Integer; overload;
+    function GetID(ATabela: TTabela; ACampo: string): Integer; overload;
     function GetMax(ATabela: TTabela; ACampo: string): Integer; overload;
     function GetMax(ATabela: TTabela; ACampo,AFiltro: string): Integer; overload;
 
@@ -169,9 +171,9 @@ constructor TConexaoFDB.Create();
 begin
   inherited Create;
   FDatabase := TFDConnection.Create(Application);
-  FDatabase.DriverName := 'FB';
+  FDatabase.DriverName := 'PG';
   FDatabase.LoginPrompt := false;
-  FPhysFBDriverLink:= TFDPhysFBDriverLink.Create(Application);
+  FPhysPGDriverLink:= TFDPhysPgDriverLink.Create(Application);
 end;
 
 destructor TConexaoFDB.Destroy;
@@ -190,12 +192,14 @@ begin
   with Database do
   begin
     Params.Clear;
-    Params.Add('DriverID=FB');
-    Params.Add('Database=' + LocalBD);
+    Params.Add('DriverID=PG');
+    Params.Add('Server=' + LocalBD);
+    Params.Add('Port=' + Porta);
+    Params.Add('Database=' + Banco);
     Params.Add('user_name=' + Usuario);
     Params.Add('password=' + Senha);
-    FPhysFBDriverLink.Release;
-    FPhysFBDriverLink.VendorLib := 'C:\Windows\SysWOW64\fbclient.dll';
+    FPhysPGDriverLink.Release;
+    FPhysPGDriverLink.VendorLib := 'C:\TimeTracking\Telas\libpq.dll';
     Connected := True;
   end;
 end;
@@ -476,6 +480,21 @@ begin
   end;
 end;
 
+function TDaoFDB.GetID(ATabela: TTabela; ACampo: string): Integer;
+var
+  AQry: TFDQuery;
+begin
+  AQry := TFDQuery.Create(Application);
+  with AQry do
+  begin
+    Connection := FConexao.Database;
+    sql.Clear;
+    sql.Add('select max(' + ACampo + ') from ' + PegaNomeTab(ATabela));
+    Open;
+    Result := fields[0].AsInteger + 1;
+  end;
+end;
+
 function TDaoFDB.GetID(ATabela: TTabela): Integer;
 var
   AQry: TFDQuery;
@@ -487,8 +506,7 @@ begin
   begin
     Connection := FConexao.Database;
     sql.Clear;
-    //sql.Add('select max(' + ACampo + ') from ' + PegaNomeTab(ATabela));
-	sql.Add(sTextSql);
+	  sql.Add(sTextSql);
     Open;
     Result := fields[0].AsInteger;
   end;
@@ -770,7 +788,7 @@ begin
                     if (StrToIntDef((Tform(vaForm).Components[i] as TLabeledEdit).Text, 0)> 0) then
                       PropRtti.SetValue(ATabela, TValue.FromVariant(StrToInt((Tform(vaForm).Components[i] as TLabeledEdit).Text)))
                     else
-                      PropRtti.SetValue(ATabela, TValue.FromVariant(GetID(ATabela)));
+                      PropRtti.SetValue(ATabela, TValue.FromVariant(GetID(ATabela,PropRtti.Name)));
                   end;
                 tkFloat:
                   begin

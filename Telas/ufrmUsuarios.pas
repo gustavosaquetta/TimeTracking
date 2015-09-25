@@ -3,20 +3,13 @@ unit ufrmUsuarios;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData,
-  cxGridTableView, cxClasses, System.Actions, Vcl.ActnList, Vcl.ImgList,
-  Vcl.ComCtrls, Vcl.ExtCtrls, cxGridLevel, cxGridCustomView,
-  cxGridCustomTableView, cxGridDBTableView, cxGrid, Vcl.ToolWin,
-  dxGDIPlusClasses, Vcl.StdCtrls, uUsuario;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmPadrao, Data.DB,
+  System.Actions, Vcl.ActnList, Vcl.ImgList, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.ToolWin, Vcl.StdCtrls, uUsuario, Vcl.Grids, Vcl.DBGrids, System.ImageList;
 
 type
   TfrmUsuarios = class(TfrmPadrao)
-    cxgrdbclmnGrid1DBTableView1Column1: TcxGridDBColumn;
-    cxgrdbclmnGrid1DBTableView1Column2: TcxGridDBColumn;
-    cxgrdbclmnGrid1DBTableView1Column3: TcxGridDBColumn;
     lbledtI_COD_USUARIO: TLabeledEdit;
     lbledtS_NOME: TLabeledEdit;
     lbledtS_USUARIO: TLabeledEdit;
@@ -188,13 +181,6 @@ var
 begin
   Registros := DM.Dao.ConsultaTab(ATab, ACampos);
   dsConsulta.DataSet := Registros;
-  cxGrid1DBTableView1.DataController.DataSource := dsConsulta;
-  cxgrdbclmnGrid1DBTableView1Column1.Caption := 'Código';
-  cxgrdbclmnGrid1DBTableView1Column2.Caption := 'Nome';
-  cxgrdbclmnGrid1DBTableView1Column3.Caption := 'Usuário';
-  cxgrdbclmnGrid1DBTableView1Column1.DataBinding.FieldName := 'I_COD_USUARIO';
-  cxgrdbclmnGrid1DBTableView1Column2.DataBinding.FieldName := 'S_NOME';
-  cxgrdbclmnGrid1DBTableView1Column3.DataBinding.FieldName := 'S_USUARIO';
   sbStatus.Panels[1].Text := 'Registros no DataSet: ' + IntToStr(Registros.RecordCount);
 end;
 
